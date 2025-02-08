@@ -154,12 +154,12 @@ namespace BookSphere.Controllers
             return _context.Books.Any(e => e.Id == id);
         }
         [HttpGet]
-        private async Task<IActionResult> Search()
+        public async Task<IActionResult> Search()
         {
             return View();
         }
         [HttpPost]
-        private async Task<IActionResult> Search(string title)
+        public async Task<IActionResult> Search(string title)
         {
             var book = await _context.Books
                 .FirstOrDefaultAsync(b => b.Title.ToLower() == title);

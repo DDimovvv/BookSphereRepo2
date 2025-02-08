@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookSphere.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250207131216_initial")]
+    [Migration("20250208093836_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -56,6 +56,10 @@ namespace BookSphere.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("AuthorId")
                         .HasColumnType("int");

@@ -1,6 +1,7 @@
 using BookSphere.Data;
 using BookSphere.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,10 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 //Dobavqne na Identity
 builder.Services.AddDefaultIdentity<User>(options =>
 options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -36,5 +40,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages();
 
 app.Run();

@@ -32,7 +32,12 @@ body {
     background-color: red; /* Red background color */
     color: white; /* White text color */
     border: none; /* No border */
-    padding: 10px 20px; /* Padding for the button */
+    padding: 1px; /* Padding for the button */
     border-radius: 5px; /* Rounded corners */
     cursor: pointer; /* Cursor change on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.btnLogout:hover{
+    background-color: darkred;
+    transform: scale(1.1);
 }

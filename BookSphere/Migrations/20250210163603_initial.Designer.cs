@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookSphere.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250208160650_initial")]
+    [Migration("20250210163603_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -77,6 +77,7 @@ namespace BookSphere.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

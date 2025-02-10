@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using BookSphere.Data;
 using BookSphere.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookSphere.Controllers
 {
+    [Authorize]
     public class AuthorsController : Controller
     {
         private readonly ApplicationDbContext _context;

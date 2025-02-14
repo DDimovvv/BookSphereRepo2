@@ -86,7 +86,6 @@ namespace BookSphere.Controllers
 
         // POST: Authors/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,DateOfBirth")] Author author)
@@ -162,6 +161,8 @@ namespace BookSphere.Controllers
             return View();
         }
         [HttpPost]
+
+        //search method
         public async Task<IActionResult> Search(string first_name, string last_name)
         {
             var author = await _context.Authors

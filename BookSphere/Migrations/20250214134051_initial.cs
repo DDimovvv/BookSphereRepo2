@@ -185,6 +185,7 @@ namespace BookSphere.Migrations
                     Genre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Pages = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AuthorId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

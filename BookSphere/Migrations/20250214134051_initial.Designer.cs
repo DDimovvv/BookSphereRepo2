@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookSphere.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250210163603_initial")]
+    [Migration("20250214134051_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -68,6 +68,9 @@ namespace BookSphere.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Genre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Pages")

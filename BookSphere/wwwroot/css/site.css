@@ -28,16 +28,19 @@ body {
     padding-right: 20px; /* Optional: Adjusts right padding */
 }
 
-.btnLogout {
-    background-color: red; /* Red background color */
-    color: white; /* White text color */
-    border: none; /* No border */
-    padding: 1px; /* Padding for the button */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Cursor change on hover */
+.nav-item {
+    background-color: white;
+    padding: 1px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
-.btnLogout:hover{
-    background-color: darkred;
-    transform: scale(1.1);
+.nav-item:hover {
+    background-color: white;
+    transform: scale(1.05);
+}
+.text-center img{
+    width: 450px;
+    height: 300px;
 }

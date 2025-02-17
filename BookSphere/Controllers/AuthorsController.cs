@@ -57,7 +57,7 @@ namespace BookSphere.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,DateOfBirth")] Author author)
+        public async Task<IActionResult> Create([Bind("Id,FullName,DateOfBirth")] Author author)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace BookSphere.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,DateOfBirth")] Author author)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,DateOfBirth")] Author author)
         {
             if (id != author.Id)
             {
@@ -161,15 +161,15 @@ namespace BookSphere.Controllers
             return View();
         }
         [HttpPost]
-
-        //search method
-        public async Task<IActionResult> Search(string first_name, string last_name)
+        public async Task<IActionResult> Search(string full_name)
         {
-            var author = await _context.Authors
-            .FirstOrDefaultAsync(a =>
-            a.FirstName.ToLower() == first_name.ToLower() &&
-            a.LastName.ToLower() == last_name.ToLower());
+            if (string.IsNullOrEmpty(full_name))
+            {
+                return BadRequest("Search parameter is invalid.");
+            }
 
+            var author = await _context.Authors
+                .FirstOrDefaultAsync(a => a.FullName != null && a.FullName.ToLower() == full_name.ToLower());
 
             if (author == null)
             {

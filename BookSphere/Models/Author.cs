@@ -7,9 +7,7 @@ namespace BookSphere.Models
     {
         public int Id { get; set; } = 0!;
         [Required]
-        public string ?FirstName { get; set; } = null;
-        [Required]
-        public string ?LastName { get; set; } = null;
+        public string ?FullName { get; set; } = null;
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
         public ICollection<Book> ? Books { get; set; }

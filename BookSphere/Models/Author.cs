@@ -9,8 +9,7 @@ namespace BookSphere.Models
         [Required]
         public string ?FullName { get; set; } = null;
         [DataType(DataType.Date)]
-        public DateTime DateOfBirth { get; set; }
-        public ICollection<Book> ? Books { get; set; }
+        public DateTime? DateOfBirth { get; set; } = null;
         public ICollection<BookAuthor> ?BookAuthors { get; set; } = null;
     }
 }

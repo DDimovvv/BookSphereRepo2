@@ -55,12 +55,30 @@ namespace BookSphere.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Author,PublicationDate,Genre,Pages,Description, ImagePath")] Book book)
+        public async Task<IActionResult> Create([Bind("Id,Title,Author,PublicationDate,Genre,Pages,Description")] Book book)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(book);
-                await _context.SaveChangesAsync();
+                if (!string.IsNullOrWhiteSpace(book.Author)) // Ensure author name is not null or empty
+                {
+                    var existingAuthor = await _context.Authors.FirstOrDefaultAsync(a => a.FullName == book.Author);
+                    if (existingAuthor == null)
+                    {
+                        // If the author does not exist, create and add a new one
+                        existingAuthor = new Author { FullName = book.Author };
+                        _context.Authors.Add(existingAuthor);
+                        await _context.SaveChangesAsync(); // Save to generate the new Author's Id
+                    }
+                    _context.Books.Add(book);
+                    await _context.SaveChangesAsync();
+                    _context.BookAuthor.Add(new BookAuthor { BookId = book.Id, AuthorId = existingAuthor.Id });
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    ModelState.AddModelError("Author", "Author name cannot be empty");
+                    return View(book);
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(book);

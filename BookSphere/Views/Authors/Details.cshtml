@@ -27,6 +27,42 @@
 </div>
 <br />
 <div>
+    <h4>Books by this Author</h4>
+    <hr />
+    @if (Model.BookAuthors != null && Model.BookAuthors.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Publication Date</th>
+                    <th>Pages</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var bookAuthor in Model.BookAuthors)
+                {
+                    <tr>
+                        <td>@bookAuthor.Book.Title</td>
+                        <td>@bookAuthor.Book.PublicationDate.ToShortDateString()</td>
+                        <td>@bookAuthor.Book.Pages</td>
+                        <td>
+                            <a asp-controller="Books" asp-action="Details" asp-route-id="@bookAuthor.BookId">View Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No books found for this author.</p>
+    }
+</div>
+
+<br />
+<div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

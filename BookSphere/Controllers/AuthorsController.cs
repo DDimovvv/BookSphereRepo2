@@ -37,7 +37,10 @@ namespace BookSphere.Controllers
             }
 
             var author = await _context.Authors
-                .FirstOrDefaultAsync(m => m.Id == id);
+        .Include(a => a.BookAuthors)
+        .ThenInclude(ba => ba.Book)
+        .FirstOrDefaultAsync(m => m.Id == id);
+
             if (author == null)
             {
                 return NotFound();

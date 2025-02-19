@@ -17,6 +17,6 @@ namespace BookSphere.Models
         public int Pages { get; set; }
         public string ?Description { get; set; } = null;
         public ICollection<BookAuthor> ?BookAuthors { get; set; } = null;
-        public string ?ImagePath { get; set; } = null;
+
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookSphere.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250217082501_initial")]
+    [Migration("20250219212058_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -33,7 +33,7 @@ namespace BookSphere.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FullName")
@@ -57,16 +57,10 @@ namespace BookSphere.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("AuthorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Genre")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Pages")
@@ -80,8 +74,6 @@ namespace BookSphere.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
 
                     b.ToTable("Books");
                 });
@@ -309,13 +301,6 @@ namespace BookSphere.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BookSphere.Models.Book", b =>
-                {
-                    b.HasOne("BookSphere.Models.Author", null)
-                        .WithMany("Books")
-                        .HasForeignKey("AuthorId");
-                });
-
             modelBuilder.Entity("BookSphere.Models.BookAuthor", b =>
                 {
                     b.HasOne("BookSphere.Models.Author", "Author")
@@ -389,8 +374,6 @@ namespace BookSphere.Migrations
             modelBuilder.Entity("BookSphere.Models.Author", b =>
                 {
                     b.Navigation("BookAuthors");
-
-                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("BookSphere.Models.Book", b =>

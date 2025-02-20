@@ -66,6 +66,11 @@ namespace BookSphere.Controllers
             { 
                 if (_context.Authors.FirstOrDefault(a => a.FullName == author.FullName) == null)
                 {
+                    if(author.DateOfBirth > DateTime.Now)
+                    {
+                        ModelState.AddModelError("DateOfBirth", "Date of birth cannot be in the future.");
+                        return View(author);
+                    }
                     _context.Add(author);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -109,6 +114,21 @@ namespace BookSphere.Controllers
             {
                 try
                 {
+                    if (_context.Authors.Any(a => a.FullName == author.FullName && a.Id != author.Id))
+                    {
+                        ModelState.AddModelError("FullName", "Author with this name already exists.");
+                        return View(author);
+                    }
+                    if (author.DateOfBirth > DateTime.Now)
+                    {
+                        ModelState.AddModelError("DateOfBirth", "Date of birth cannot be in the future.");
+                        return View(author);
+                    }
+                    if (_context.Books.Any(b => b.Author == author.FullName && b.PublicationDate <= author.DateOfBirth))
+                    {
+                        ModelState.AddModelError("DateOfBirth", "Author cannot be born after the publication date of their book(s).");
+                        return View(author);
+                    }
                     _context.Update(author);
                     await _context.SaveChangesAsync();
                 }

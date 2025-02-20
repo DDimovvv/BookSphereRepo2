@@ -69,6 +69,16 @@ namespace BookSphere.Controllers
                     ModelState.AddModelError("Pages", "Number of pages must be greater than 0");
                     return View(book);
                 }
+                if (book.PublicationDate > DateTime.Now)
+                {
+                    ModelState.AddModelError("PublicationDate", "Publication date cannot be in the future");
+                    return View(book);
+                }
+                if (_context.Authors.Any(a => book.Author == a.FullName && book.PublicationDate <= a.DateOfBirth) && _context.Authors.Select(a => book.Author == a.FullName) != null)
+                {
+                    ModelState.AddModelError("PublicationDate", "A book can't be published before its author's date of birth");
+                    return View(book);
+                }
                 if (!string.IsNullOrWhiteSpace(book.Author)) // Ensure author name is not null or empty
                 {
                     var existingAuthor = await _context.Authors.FirstOrDefaultAsync(a => a.FullName == book.Author);
@@ -126,6 +136,26 @@ namespace BookSphere.Controllers
             {
                 try
                 {
+                    if (_context.Books.Any(b => b.Title == book.Title && b.Id != book.Id))
+                    {
+                        ModelState.AddModelError("Title", "Book with this title already exists");
+                        return View(book);
+                    }
+                    if (book.Pages < 1)
+                    {
+                        ModelState.AddModelError("Pages", "Number of pages must be greater than 0");
+                        return View(book);
+                    }
+                    if(book.PublicationDate > DateTime.Now)
+                    {
+                        ModelState.AddModelError("PublicationDate", "Publication date cannot be in the future");
+                        return View(book);
+                    }
+                    if (_context.Authors.Any(a => book.Author == a.FullName && book.PublicationDate <= a.DateOfBirth) && _context.Authors.Select(a => book.Author == a.FullName) != null)
+                    {
+                        ModelState.AddModelError("PublicationDate", "A book can't be published before its author's date of birth");
+                        return View(book);
+                    }
                     _context.Update(book);
                     await _context.SaveChangesAsync();
                 }

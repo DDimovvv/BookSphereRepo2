@@ -63,10 +63,17 @@ namespace BookSphere.Controllers
         public async Task<IActionResult> Create([Bind("Id,FullName,DateOfBirth")] Author author)
         {
             if (ModelState.IsValid)
-            {
-                _context.Add(author);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+            { 
+                if (_context.Authors.FirstOrDefault(a => a.FullName == author.FullName) == null)
+                {
+                    _context.Add(author);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError("FullName", "Author already exists.");
+                }
             }
             return View(author);
         }

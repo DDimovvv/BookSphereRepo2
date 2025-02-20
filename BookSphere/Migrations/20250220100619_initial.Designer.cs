@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookSphere.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250219212058_initial")]
+    [Migration("20250220100619_initial")]
     partial class initial
     {
         /// <inheritdoc />

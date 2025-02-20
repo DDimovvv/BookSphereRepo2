@@ -59,6 +59,16 @@ namespace BookSphere.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (_context.Books.Any(b => b.Title == book.Title))
+                {
+                    ModelState.AddModelError("Title", "Book with this title already exists");
+                    return View(book);
+                }   
+                if (book.Pages < 1)
+                {
+                    ModelState.AddModelError("Pages", "Number of pages must be greater than 0");
+                    return View(book);
+                }
                 if (!string.IsNullOrWhiteSpace(book.Author)) // Ensure author name is not null or empty
                 {
                     var existingAuthor = await _context.Authors.FirstOrDefaultAsync(a => a.FullName == book.Author);
@@ -73,13 +83,14 @@ namespace BookSphere.Controllers
                     await _context.SaveChangesAsync();
                     _context.BookAuthor.Add(new BookAuthor { BookId = book.Id, AuthorId = existingAuthor.Id });
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 else
                 {
                     ModelState.AddModelError("Author", "Author name cannot be empty");
                     return View(book);
                 }
-                return RedirectToAction(nameof(Index));
+
             }
             return View(book);
         }

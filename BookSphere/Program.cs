@@ -63,6 +63,8 @@ builder.Services.AddDefaultIdentity<User>(options =>
     .AddRoles<IdentityRole>() // Добавяне на поддръжка за роли
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
